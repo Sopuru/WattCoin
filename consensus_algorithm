@@ -1,0 +1,43 @@
+# consensus_algorithm.py
+
+class Node:
+    def __init__(self, node_id):
+        self.node_id = node_id
+        self.vote = False
+
+class ConsensusAlgorithm:
+    def __init__(self, nodes):
+        self.nodes = nodes
+
+    def add_node(self, node):
+        self.nodes.append(node)
+
+    def run_consensus(self):
+        # Each node votes randomly (this can be replaced with a more sophisticated mechanism)
+        for node in self.nodes:
+            node.vote = random.choice([True, False])
+
+    def check_for_consensus(self):
+        # Check if at least 50% of nodes support the consensus
+        votes_in_favor = sum(node.vote for node in self.nodes)
+        return votes_in_favor >= len(self.nodes) / 2
+
+if __name__ == "__main__":
+    import random
+
+    # Create sample nodes
+    node1 = Node(node_id="Node1")
+    node2 = Node(node_id="Node2")
+    node3 = Node(node_id="Node3")
+
+    # Add nodes to the consensus algorithm
+    consensus_algo = ConsensusAlgorithm(nodes=[node1, node2, node3])
+
+    # Run the consensus algorithm
+    consensus_algo.run_consensus()
+
+    # Check for consensus
+    if consensus_algo.check_for_consensus():
+        print("Consensus reached!")
+    else:
+        print("Consensus not reached.")
