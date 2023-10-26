@@ -1,0 +1,76 @@
+from hashlib import sha256
+from random import randint
+
+class Node:
+    def __init__(self, address):
+        self.address = address
+        self.signature = self.generate_signature()
+
+    def generate_signature(self):
+        # Pseudo code for generating a node signature
+        return sha256(str(randint(1, 1000)).encode()).hexdigest()
+
+class WattCoinNetwork:
+    def __init__(self):
+        self.transactions = {}  # Dictionary to store transactions by Station_ID
+        self.if_then_action_pool = set()  # Set to store WattCoin values for consensus
+
+    def broadcast_new_energy(self, new_energy):
+        # Pseudo code for broadcasting new_energy to all nodes
+        for node in nodes:
+            node.receive_broadcast(new_energy)
+
+    def receive_broadcast(self, new_energy):
+        # Pseudo code for nodes receiving and verifying the broadcast
+        if self.verify_station_id(new_energy):
+            self.if_then_action_pool.add(new_energy['WattCoin_value'])
+            if self.check_for_consensus():
+                self.execute_consensus_action(new_energy)
+
+    def verify_station_id(self, new_energy):
+        # Pseudo code for verifying Station_ID
+        station_id = new_energy['Station_ID']
+        if station_id not in self.transactions:
+            self.transactions[station_id] = {'sell_id': 0}
+        return True
+
+    def check_for_consensus(self):
+        # Pseudo code for checking consensus
+        n = len(nodes)
+        return len(self.if_then_action_pool) > n / 2
+
+    def execute_consensus_action(self, new_energy):
+        # Pseudo code for executing consensus action
+        station_id = new_energy['Station_ID']
+        wattcoin_value = new_energy['WattCoin_value']
+        sell_id = self.transactions[station_id]['sell_id']
+
+        # Check and balance the transaction
+        if self.verify_transaction(station_id, wattcoin_value):
+            self.transactions[station_id]['sell_id'] += 1
+            message = f"Transaction approved by {self.address} with signature {self.signature}"
+        else:
+            self.transactions[station_id]['sell_id'] -= 1
+            message = f"Transaction denied by {self.address} with signature {self.signature}"
+
+        print(message)
+
+    def verify_transaction(self, station_id, wattcoin_value):
+        # Pseudo code for verifying the transaction
+        return wattcoin_value in self.if_then_action_pool
+
+
+# Sample usage
+nodes = [Node("Node1"), Node("Node2"), Node("Node3")]
+wattcoin_network = WattCoinNetwork()
+
+new_energy = {
+    'Station_ID': 'ABC123',
+    'WattCoin_value': 500,
+    'Timestamp': '2023-10-27',
+    'Attachment_code': 'XYZ',
+    'Sell_ID': 1,
+    'ReceivedNodes': nodes
+}
+
+wattcoin_network.broadcast_new_energy(new_energy)
