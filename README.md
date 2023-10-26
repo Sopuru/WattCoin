@@ -1,6 +1,6 @@
 # WattCoin
 # WattCoin: A novel distributed network for renewable energy trading.
-# Joshua Sopuru (Girne American University)
+# By Joshua Sopuru (Girne American University)
 class WattCoinNetwork:
     def __init__(self):
         self.total_wattcoin = {}  # Dictionary to store WattCoin_ID and value_of_coin
