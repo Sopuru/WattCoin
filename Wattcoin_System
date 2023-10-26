@@ -1,0 +1,72 @@
+# wattcoin_system.py
+#Joshua Sopuru: A novel peer to peer energy trading network
+
+import hashlib
+import random
+from datetime import datetime, timedelta
+
+class WattCoin:
+    def __init__(self, wattcoin_id, value_of_coin):
+        self.wattcoin_id = wattcoin_id
+        self.value_of_coin = value_of_coin
+
+class Blockchain:
+    def __init__(self):
+        self.blocks = []
+
+    def add_block(self, block):
+        self.blocks.append(block)
+
+class ConsensusAlgorithm:
+    def __init__(self):
+        self.nodes = []
+
+    def add_node(self, node):
+        self.nodes.append(node)
+
+    def run_consensus(self):
+        # Simplified consensus algorithm
+        for node in self.nodes:
+            node.vote = random.choice([True, False])
+
+class Node:
+    def __init__(self, node_id, total_consumption, total_reward, generation_rate):
+        self.node_id = node_id
+        self.total_consumption = total_consumption
+        self.total_reward = total_reward
+        self.generation_rate = generation_rate
+        self.vote = False
+
+def generate_wattcoin_id():
+    # Simplified WattCoin ID generation, actual implementation may vary
+    return hashlib.sha256(str(random.randint(1, 1000)).encode()).hexdigest()
+
+def simulate_wattcoin_system():
+    blockchain = Blockchain()
+    consensus_algo = ConsensusAlgorithm()
+
+    # Sample nodes
+    node1 = Node(node_id="Node1", total_consumption=100, total_reward=50, generation_rate=30)
+    node2 = Node(node_id="Node2", total_consumption=150, total_reward=40, generation_rate=40)
+    node3 = Node(node_id="Node3", total_consumption=120, total_reward=60, generation_rate=20)
+
+    consensus_algo.add_node(node1)
+    consensus_algo.add_node(node2)
+    consensus_algo.add_node(node3)
+
+    consensus_algo.run_consensus()
+
+    # Assuming consensus is reached, issue WattCoins
+    if all(node.vote for node in consensus_algo.nodes):
+        wattcoin_id = generate_wattcoin_id()
+        wattcoin_value = sum(node.total_reward for node in consensus_algo.nodes)
+        wattcoin = WattCoin(wattcoin_id, wattcoin_value)
+        blockchain.add_block(wattcoin)
+
+    # Print blockchain content
+    print("Blockchain Content:")
+    for block in blockchain.blocks:
+        print(f"WattCoin ID: {block.wattcoin_id}, Value: {block.value_of_coin}")
+
+if __name__ == "__main__":
+    simulate_wattcoin_system()
