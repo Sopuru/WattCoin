@@ -1,0 +1,18 @@
+# simulation.py
+from blockchain import Blockchain
+from consensus import ConsensusAlgorithm
+from node import Node
+
+# Sample usage of the modules
+blockchain = Blockchain()
+consensus_algo = ConsensusAlgorithm()
+
+node1 = Node(node_id="Node1", total_consumption=100, total_reward=50, generation_rate=30)
+node2 = Node(node_id="Node2", total_consumption=150, total_reward=40, generation_rate=40)
+node3 = Node(node_id="Node3", total_consumption=120, total_reward=60, generation_rate=20)
+
+consensus_algo.add_node(node1)
+consensus_algo.add_node(node2)
+consensus_algo.add_node(node3)
+
+consensus_algo.run_consensus()
