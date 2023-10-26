@@ -1,0 +1,11 @@
+# node.py
+
+class Node:
+    def __init__(self, node_id, total_consumption, total_reward, generation_rate):
+        self.node_id = node_id
+        self.total_consumption = total_consumption
+        self.total_reward = total_reward
+        self.generation_rate = generation_rate
+        self.vote = False
+
+# Additional classes and functions related to nodes can be added here
